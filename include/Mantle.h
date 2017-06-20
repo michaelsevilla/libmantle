@@ -18,24 +18,27 @@
 #include <lua.hpp>
 #include <list>
 #include <map>
+#include <string>
+#include <vector>
 
-#include "include/types.h"
-#include "common/Clock.h"
-#include "CInode.h"
+using namespace std;
+
+typedef int32_t rank_t;
+typedef int32_t load_t;
 
 class Mantle {
   protected:
     lua_State *L;
-    map<mds_rank_t, mds_load_t>  mds_load;
+    map<rank_t, load_t>  server_load;
 
   public:
-    Mantle() : L(NULL) {};
+    Mantle() : L(NULL) { };
     int start();
     int execute(const string &script);
     int balance(const string &script,
-                mds_rank_t whoami,
+		rank_t whoami, 
                 const vector < map<string, double> > &metrics,
-                map<mds_rank_t,double> &my_targets);
+                map<rank_t,double> &my_targets);
 };
 
 #endif

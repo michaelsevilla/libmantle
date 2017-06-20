@@ -12,18 +12,13 @@
  *
  */
 
-#include "mdstypes.h"
-#include "MDSRank.h"
 #include "Mantle.h"
-#include "msg/Messenger.h"
-
 #include <fstream>
+#include <iostream>
+#include <cerrno>
 
-#define dout_subsys ceph_subsys_mds_balancer
-#undef DOUT_COND
-#define DOUT_COND(cct, l) l<=cct->_conf->debug_mds || l <= cct->_conf->debug_mds_balancer
-#undef dout_prefix
-#define dout_prefix *_dout << "mds.mantle "
+#define dout(level) (std::cout << "[src/Mantle.cc (" << __LINE__ << ")]\t" << level << ": " )
+#define dendl (endl)
 
 int dout_wrapper(lua_State *L)
 {
@@ -94,26 +89,26 @@ int Mantle::execute(const string &script)
 }
 
 int Mantle::balance(const string &script,
-                    mds_rank_t whoami,
+		    rank_t whoami,
                     const vector < map<string, double> > &metrics,
-                    map<mds_rank_t,double> &my_targets)
+                    map<rank_t,double> &my_targets)
 {
   if (start() != 0)
     return -ENOEXEC;
 
-  /* tell the balancer which mds is making the decision */
+  /* tell the balancer which server is making the decision */
   lua_pushinteger(L, int(whoami));
   lua_setfield(L, -2, "whoami");
 
-  /* global mds metrics to hold all dictionaries */
+  /* global server metrics to hold all dictionaries */
   lua_newtable(L);
 
-  /* push name of mds (i) and its metrics onto Lua stack */
+  /* push name of server (i) and its metrics onto Lua stack */
   for (unsigned i=0; i < metrics.size(); i++) {
     lua_pushinteger(L, i);
     lua_newtable(L);
 
-    /* push values into this mds's table; setfield assigns key/pops val */
+    /* push values into this server's table; setfield assigns key/pops val */
     for (map<string, double>::const_iterator it = metrics[i].begin();
          it != metrics[i].end();
          it++) {
@@ -121,12 +116,12 @@ int Mantle::balance(const string &script,
       lua_setfield(L, -2, it->first.c_str());
     }
 
-    /* in global mds table at stack[-3], set k=stack[-1] to v=stack[-2] */
+    /* in global server table at stack[-3], set k=stack[-1] to v=stack[-2] */
     lua_rawset(L, -3);
   }
 
-  /* set the name of the global mds table */
-  lua_setglobal(L, "mds");
+  /* set the name of the global server table */
+  lua_setglobal(L, "server");
 
   int ret = execute(script);
   if (ret != 0) {
@@ -142,7 +137,7 @@ int Mantle::balance(const string &script,
   }
 
   /* fill in return value */
-  mds_rank_t it = mds_rank_t(0);
+  rank_t it = rank_t(0);
   lua_pushnil(L);
   while (lua_next(L, -2) != 0) {
     if (!lua_isnumber(L, -1)) {
