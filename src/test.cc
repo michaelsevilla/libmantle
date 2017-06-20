@@ -1,11 +1,22 @@
 #include <iostream>
 #include <Mantle.h>
+#include <mpi.h>
+#include <string> 
 
 int main() {
-  std::cout << "Hello, world!" << std::endl;
+
+  /* Mantle garbage */
   Mantle mantle;
-  int ret = mantle.start();
-  std::cout << "... start()=" << ret << std::endl;
-  ret = mantle.execute("BAL_LOG(0, \"Hello world from Lua!\")");
-  std::cout << "... execute()=" << ret << std::endl;
+  mantle.start();
+
+  /* MPI garbage */
+  MPI_Init(NULL, NULL);
+  int world_size;
+  MPI_Comm_size(MPI_COMM_WORLD, &world_size);
+  int world_rank;
+  MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
+
+  vector < map<string, double> > metrics (world_size);
+  map<rank_t,double> my_targets;
+  mantle.balance("BAL_LOG(0, \"Hello world from balance!\")\n return {}", world_rank, metrics, my_targets);
 }
