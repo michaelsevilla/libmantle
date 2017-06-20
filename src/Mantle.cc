@@ -1,29 +1,31 @@
-#include <iostream>
-
-void hello() {
-  std::cout << "Hello from Mantle!" << std::endl;
-}
-
-//// -*- mode:C++; tab-width:8; c-basic-offset:2; indent-tabs-mode:t -*-
-//// vim: ts=8 sw=2 smarttab
-///*
-// * Ceph - scalable distributed file system
-// *
-// * Copyright (C) 2016 Michael Sevilla <mikesevilla3@gmail.com>
-// *
-// * This is free software; you can redistribute it and/or
-// * modify it under the terms of the GNU Lesser General Public
-// * License version 2.1, as published by the Free Software
-// * Foundation.  See file COPYING.
-// *
-// */
+//#include <iostream>
 //
+//void hello() {
+//  std::cout << "Hello from Mantle!" << std::endl;
+//}
+
+// -*- mode:C++; tab-width:8; c-basic-offset:2; indent-tabs-mode:t -*-
+// vim: ts=8 sw=2 smarttab
+/*
+ * Ceph - scalable distributed file system
+ *
+ * Copyright (C) 2016 Michael Sevilla <mikesevilla3@gmail.com>
+ *
+ * This is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License version 2.1, as published by the Free Software
+ * Foundation.  See file COPYING.
+ *
+ */
+
 //#include "mdstypes.h"
 //#include "MDSRank.h"
-//#include "Mantle.h"
+#include "Mantle.h"
 //#include "msg/Messenger.h"
 //
-//#include <fstream>
+#include <fstream>
+// ADDED
+#include <iostream>
 //
 //#define dout_subsys ceph_subsys_mds_balancer
 //#undef DOUT_COND
@@ -31,73 +33,84 @@ void hello() {
 //#undef dout_prefix
 //#define dout_prefix *_dout << "mds.mantle "
 //
-//int dout_wrapper(lua_State *L)
-//{
-//  #undef dout_prefix
-//  #define dout_prefix *_dout << "lua.balancer "
+int dout_wrapper(lua_State *L)
+{
+  //#undef dout_prefix
+  //#define dout_prefix *_dout << "lua.balancer "
+
+  /* Lua indexes the stack from the bottom up */
+  int bottom = -1 * lua_gettop(L);
+  if (!lua_isinteger(L, bottom) || bottom == 0) {
+    //dout(0) << "WARNING: BAL_LOG has no message" << dendl;
+    cout << "WARNING: BAL_LOG has no message" << endl;
+    return -1;
+    //return -EINVAL;
+  }
+
+  /* bottom of the stack is the log level */
+  int level = lua_tointeger(L, bottom);
+
+  /* rest of the stack is the message */
+  cout << "FILLING IN THE MESSAGE" << endl;
+  string s = "";
+  for (int i = bottom + 1; i < 0; i++)
+    lua_isstring(L, i) ? s.append(lua_tostring(L, i)) : s.append("<empty>");
+
+  //dout(level) << s << dendl;
+  cout << s << endl;
+  return 0;
+}
 //
-//  /* Lua indexes the stack from the bottom up */
-//  int bottom = -1 * lua_gettop(L);
-//  if (!lua_isinteger(L, bottom) || bottom == 0) {
-//    dout(0) << "WARNING: BAL_LOG has no message" << dendl;
-//    return -EINVAL;
-//  }
-//
-//  /* bottom of the stack is the log level */
-//  int level = lua_tointeger(L, bottom);
-//
-//  /* rest of the stack is the message */
-//  string s = "";
-//  for (int i = bottom + 1; i < 0; i++)
-//    lua_isstring(L, i) ? s.append(lua_tostring(L, i)) : s.append("<empty>");
-//
-//  dout(level) << s << dendl;
-//  return 0;
-//}
-//
-//int Mantle::start()
-//{
-//  /* build lua vm state */
-//  L = luaL_newstate();
-//  if (!L) {
-//    dout(0) << "WARNING: mantle could not load Lua state" << dendl;
-//    return -ENOEXEC;
-//  }
-//
-//  /* balancer policies can use basic Lua functions */
-//  luaopen_base(L);
-//
-//  /* setup debugging */
-//  lua_register(L, "BAL_LOG", dout_wrapper);
-//
-//  return 0;
-//}
-//
-//int Mantle::execute(const string &script)
-//{
+int Mantle::start()
+{
+  /* build lua vm state */
+  L = luaL_newstate();
+  if (!L) {
+    //dout(0) << "WARNING: mantle could not load Lua state" << dendl;
+    //return -ENOEXEC;
+    return -1;
+  }
+
+  /* balancer policies can use basic Lua functions */
+  luaopen_base(L);
+
+  /* setup debugging */
+  lua_register(L, "BAL_LOG", dout_wrapper);
+
+  return 0;
+}
+
+int Mantle::execute(const string &script)
+{
 //  if (L == NULL) {
 //    dout(0) << "ERROR: mantle was not started" << dendl;
 //    return -ENOENT;
 //  }
 //
-//  /* load the balancer */
-//  if (luaL_loadstring(L, script.c_str())) {
-//    dout(0) << "WARNING: mantle could not load balancer: "
-//            << lua_tostring(L, -1) << dendl;
-//    return -EINVAL;
-//  }
-//
-//  /* compile/execute balancer */
-//  int ret = lua_pcall(L, 0, LUA_MULTRET, 0);
-//
-//  if (ret) {
-//    dout(0) << "WARNING: mantle could not execute script: "
-//            << lua_tostring(L, -1) << dendl;
-//    return -EINVAL;
-//  }
-//
-//  return 0;
-//}
+  /* load the balancer */
+  if (luaL_loadstring(L, script.c_str())) {
+    //dout(0) << "WARNING: mantle could not load balancer: "
+    //        << lua_tostring(L, -1) << dendl;
+    //return -EINVAL;
+    cout << "WARNING: mantle could not load balancer: "
+            << lua_tostring(L, -1) << endl;
+    return -1;
+  }
+
+  /* compile/execute balancer */
+  int ret = lua_pcall(L, 0, LUA_MULTRET, 0);
+
+  if (ret) {
+    cout << "WARNING: mantle could not execute script: "
+         << lua_tostring(L, -1) << endl;
+    return -1;
+    //dout(0) << "WARNING: mantle could not execute script: "
+    //        << lua_tostring(L, -1) << dendl;
+    //return -EINVAL;
+  }
+
+  return 0;
+}
 //
 //int Mantle::balance(const string &script,
 //                    mds_rank_t whoami,
