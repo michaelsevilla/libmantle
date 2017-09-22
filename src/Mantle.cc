@@ -62,39 +62,13 @@ int Mantle::start()
   return 0;
 }
 
-int Mantle::execute(const string &script)
+int Mantle::execute(const string &script, rank_t whoami,
+                    const vector < map<string, double> > &metrics)
 {
-  if (L == NULL) {
-    dout(0) << "ERROR: mantle was not started" << dendl;
+  if (start() != 0 || L == NULL) {
+    dout(0) << "ERROR: mantle or lua was not started" << dendl;
     return -ENOENT;
   }
-
-  /* load the balancer */
-  if (luaL_loadstring(L, script.c_str())) {
-    dout(0) << "WARNING: mantle could not load balancer: "
-            << lua_tostring(L, -1) << dendl;
-    return -EINVAL;
-  }
-
-  /* compile/execute balancer */
-  int ret = lua_pcall(L, 0, LUA_MULTRET, 0);
-
-  if (ret) {
-    dout(0) << "WARNING: mantle could not execute script: "
-            << lua_tostring(L, -1) << dendl;
-    return -EINVAL;
-  }
-
-  return 0;
-}
-
-int Mantle::balance(const string &script,
-		    rank_t whoami,
-                    const vector < map<string, double> > &metrics,
-                    map<rank_t,double> &my_targets)
-{
-  if (start() != 0)
-    return -ENOEXEC;
 
   /* tell the balancer which server is making the decision */
   lua_pushinteger(L, int(whoami));
@@ -123,7 +97,29 @@ int Mantle::balance(const string &script,
   /* set the name of the global server table */
   lua_setglobal(L, "server");
 
-  int ret = execute(script);
+  /* load the balancer */
+  if (luaL_loadstring(L, script.c_str())) {
+    dout(0) << "WARNING: mantle could not load balancer: "
+            << lua_tostring(L, -1) << dendl;
+    return -EINVAL;
+  }
+
+  /* compile/execute balancer */
+  int ret = lua_pcall(L, 0, LUA_MULTRET, 0);
+  if (ret) {
+    dout(0) << "WARNING: mantle could not execute script: "
+            << lua_tostring(L, -1) << dendl;
+    return -EINVAL;
+  }
+
+  return 0;
+}
+
+int Mantle::where(const string &script, rank_t whoami,
+                  const vector < map<string, double> > &metrics,
+                  map<rank_t,double> &my_targets)
+{
+  int ret = execute(script, whoami, metrics);
   if (ret != 0) {
     lua_close(L);
     return ret;
@@ -150,6 +146,54 @@ int Mantle::balance(const string &script,
     it++;
   }
 
+  lua_close(L);
+  return 0;
+}
+
+int Mantle::when(const string &script, rank_t whoami,
+                 const vector < map<string, double> > &metrics,
+		 bool &decision)
+{
+  int ret = execute(script, whoami, metrics);
+  if (ret != 0) {
+    lua_close(L);
+    return ret;
+  }
+
+  /* parse response by iterating over Lua stack */
+  if (lua_isboolean(L, -1) == 0) {
+    dout(0) << "WARNING: mantle script returned a malformed response" << dendl;
+    lua_close(L);
+    return -EINVAL;
+  }
+
+  /* fill in return value */
+  decision = lua_toboolean(L, -1);
+  lua_pop(L, 1);
+  lua_close(L);
+  return 0;
+}
+
+int Mantle::howmuch(const string &script, rank_t whoami,
+                    const vector < map<string, double> > &metrics,
+		    float &decision)
+{
+  int ret = execute(script, whoami, metrics);
+  if (ret != 0) {
+    lua_close(L);
+    return ret;
+  }
+
+  /* parse response by iterating over Lua stack */
+  if (lua_isnumber(L, -1) == 0) {
+    dout(0) << "WARNING: mantle script returned a malformed response" << dendl;
+    lua_close(L);
+    return -EINVAL;
+  }
+
+  /* fill in return value */
+  decision = lua_tonumber(L, -1);
+  lua_pop(L, 1);
   lua_close(L);
   return 0;
 }

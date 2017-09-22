@@ -30,15 +30,21 @@ class Mantle {
   protected:
     lua_State *L;
     map<rank_t, load_t>  server_load;
+    int execute(const string &script, rank_t whoami,
+                const vector < map<string, double> > &metrics);
 
   public:
     Mantle() : L(NULL) { };
     int start();
-    int execute(const string &script);
-    int balance(const string &script,
-		rank_t whoami, 
+    int when(   const string &script, rank_t whoami, 
                 const vector < map<string, double> > &metrics,
-                map<rank_t,double> &my_targets);
+		bool &decision);
+    int howmuch(const string &script, rank_t whoami, 
+                const vector < map<string, double> > &metrics,
+		float &decision);
+    int where(  const string &script, rank_t whoami, 
+                const vector < map<string, double> > &metrics,
+                map<rank_t,double> &decision);
 };
 
 #endif
