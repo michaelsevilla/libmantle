@@ -12,6 +12,16 @@
  *
  */
 
+/** 
+ * \mainpage Mantle
+ *
+ * Mantle is a API and framework for designing load balancing policiers
+ *
+ * \file Mantle.h
+ * \brief API for the load balancing microservice
+ *
+ */
+
 #ifndef CEPH_MANTLE_H
 #define CEPH_MANTLE_H
 
@@ -21,30 +31,71 @@
 #include <string>
 #include <vector>
 
+// TODO: get rid of this
 using namespace std;
 
-typedef int32_t rank_t;
+/**
+ * \brief user-defined load metric, calculated using the load callback
+ **/
 typedef int32_t load_t;
 
+/**
+ * \brief Lua script containing the logic
+ */
+typedef const string Policy;
+
+/**
+ * \brief environment meeasurements used by the policies (and populated by the service)
+ */
+typedef const vector < map<string, double> > Metrics;
+
+/** 
+ * \brief server number (either MPI rank or MDS name)
+ */
+typedef int32_t rank_t;
+
+/**
+ * The central class for the Mantle Load Balancing API
+ **/
 class Mantle {
+
   protected:
     lua_State *L;
     map<rank_t, load_t>  server_load;
-    int execute(const string &script, rank_t whoami,
-                const vector < map<string, double> > &metrics);
+    int execute(Policy p, rank_t r, Metrics &m);
 
   public:
     Mantle() : L(NULL) { };
+
+    /**
+     * Initializes Mantle, including instantiating the Lua VM
+     * @return 0 on success, < 0 otherwise
+     **/
     int start();
-    int when(   const string &script, rank_t whoami, 
-                const vector < map<string, double> > &metrics,
-		bool &decision);
-    int howmuch(const string &script, rank_t whoami, 
-                const vector < map<string, double> > &metrics,
-		float &decision);
-    int where(  const string &script, rank_t whoami, 
-                const vector < map<string, double> > &metrics,
-                map<rank_t,double> &decision);
+
+    /**
+     * Whether the service should move load or not
+     * @param decision true if the policy wants the service to migrate load, false otherwise
+     * @return 0 on success, < 0 otherwise
+     */
+
+    int when   (Policy p, Metrics m, rank_t r, bool &decision);
+
+    /**
+     * How much load the service should move
+     *
+     * @param decision amount of load the service should move
+     * @return 0 on success, < 0 otherwise
+     */
+    int howmuch(Policy p, Metrics m, rank_t r, float &decision);
+
+    /**
+     * Where the service should move load (which servers)
+     *
+     * @param decision dictionary (rank -> load) that describes which rank to send load to
+     * @return 0 on success, < 0 otherwise
+     */
+    int where  (Policy p, Metrics m, rank_t r, map<rank_t,double> &decision);
 };
 
 #endif

@@ -31,11 +31,11 @@ int main() {
   /* Call each Mantle function with empty metrics */
   bool when; float howmuch; map<rank_t,double> where;
   mantle.when(   "BAL_LOG(0, \"when() received \", server[1]['metric1'])\nreturn true",
-                 world_rank, metrics, when);
+                 metrics, world_rank, when);
   mantle.howmuch("BAL_LOG(0, \"howmuch() received \", server[1]['metric1'])\nreturn 3.145",
-                 world_rank, metrics, howmuch);
+                 metrics, world_rank, howmuch);
   mantle.where(  "BAL_LOG(0, \"where() received \", server[1]['metric1'])\nreturn {1.111, 2.222, 3.333}",
-                 world_rank, metrics, where);
+                 metrics, world_rank, where);
 
   std::cout<<"where= ";
   for(map<rank_t, double>::iterator it = where.begin();

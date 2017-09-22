@@ -18,8 +18,12 @@
 #include <cerrno>
 
 #define dout(level) (std::cout << "[src/Mantle.cc (" << __LINE__ << ")]\t" << level << ": " )
-#define dendl (endl)
+#define dendl (std::endl)
 
+//!  A test class. 
+/*!
+  A more elaborate class description.
+*/
 int dout_wrapper(lua_State *L)
 {
   #undef dout_prefix
@@ -43,7 +47,10 @@ int dout_wrapper(lua_State *L)
   dout(level) << s << dendl;
   return 0;
 }
-
+//!  A test class. 
+/*!
+  A more elaborate class description.
+*/
 int Mantle::start()
 {
   /* build lua vm state */
@@ -62,8 +69,7 @@ int Mantle::start()
   return 0;
 }
 
-int Mantle::execute(const string &script, rank_t whoami,
-                    const vector < map<string, double> > &metrics)
+int Mantle::execute(Policy script, rank_t whoami, Metrics &metrics)
 {
   if (start() != 0 || L == NULL) {
     dout(0) << "ERROR: mantle or lua was not started" << dendl;
@@ -115,9 +121,7 @@ int Mantle::execute(const string &script, rank_t whoami,
   return 0;
 }
 
-int Mantle::where(const string &script, rank_t whoami,
-                  const vector < map<string, double> > &metrics,
-                  map<rank_t,double> &my_targets)
+int Mantle::where(Policy script, Metrics metrics, rank_t whoami, map<rank_t,double> &my_targets)
 {
   int ret = execute(script, whoami, metrics);
   if (ret != 0) {
@@ -150,11 +154,9 @@ int Mantle::where(const string &script, rank_t whoami,
   return 0;
 }
 
-int Mantle::when(const string &script, rank_t whoami,
-                 const vector < map<string, double> > &metrics,
-		 bool &decision)
+int Mantle::when(Policy p, Metrics m, rank_t whoami, bool &decision)
 {
-  int ret = execute(script, whoami, metrics);
+  int ret = execute(p, whoami, m);
   if (ret != 0) {
     lua_close(L);
     return ret;
@@ -174,9 +176,7 @@ int Mantle::when(const string &script, rank_t whoami,
   return 0;
 }
 
-int Mantle::howmuch(const string &script, rank_t whoami,
-                    const vector < map<string, double> > &metrics,
-		    float &decision)
+int Mantle::howmuch(Policy script, Metrics metrics, rank_t whoami, float &decision)
 {
   int ret = execute(script, whoami, metrics);
   if (ret != 0) {
