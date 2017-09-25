@@ -20,10 +20,6 @@
 #define dout(level) (std::cout << "[src/Mantle.cc (" << __LINE__ << ")]\t" << level << ": " )
 #define dendl (std::endl)
 
-//!  A test class. 
-/*!
-  A more elaborate class description.
-*/
 int dout_wrapper(lua_State *L)
 {
   #undef dout_prefix
@@ -47,11 +43,17 @@ int dout_wrapper(lua_State *L)
   dout(level) << s << dendl;
   return 0;
 }
-//!  A test class. 
-/*!
-  A more elaborate class description.
-*/
-int Mantle::start()
+
+int Mantle::configure(Policy when, Policy where, Policy howmuch)
+{
+  whoami = whoami;
+  when_callback = when;
+  where_callback = where;
+  howmuch_callback = howmuch; 
+  return 0;
+}
+
+int Mantle::execute(Policy script, Server whoami, ClusterMetrics metrics)
 {
   /* build lua vm state */
   L = luaL_newstate();
@@ -66,18 +68,13 @@ int Mantle::start()
   /* setup debugging */
   lua_register(L, "BAL_LOG", dout_wrapper);
 
-  return 0;
-}
-
-int Mantle::execute(Policy script, rank_t whoami, Metrics &metrics)
-{
-  if (start() != 0 || L == NULL) {
+  if (L == NULL) {
     dout(0) << "ERROR: mantle or lua was not started" << dendl;
     return -ENOENT;
   }
 
   /* tell the balancer which server is making the decision */
-  lua_pushinteger(L, int(whoami));
+  lua_pushinteger(L, whoami);
   lua_setfield(L, -2, "whoami");
 
   /* global server metrics to hold all dictionaries */
@@ -89,7 +86,7 @@ int Mantle::execute(Policy script, rank_t whoami, Metrics &metrics)
     lua_newtable(L);
 
     /* push values into this server's table; setfield assigns key/pops val */
-    for (map<string, double>::const_iterator it = metrics[i].begin();
+    for (ServerMetrics::const_iterator it = metrics[i].begin();
          it != metrics[i].end();
          it++) {
       lua_pushnumber(L, it->second);
@@ -121,9 +118,9 @@ int Mantle::execute(Policy script, rank_t whoami, Metrics &metrics)
   return 0;
 }
 
-int Mantle::where(Policy script, Metrics metrics, rank_t whoami, map<rank_t,double> &my_targets)
+int Mantle::where(Targets &my_targets)
 {
-  int ret = execute(script, whoami, metrics);
+  int ret = execute(where_callback, whoami, metrics);
   if (ret != 0) {
     lua_close(L);
     return ret;
@@ -137,7 +134,7 @@ int Mantle::where(Policy script, Metrics metrics, rank_t whoami, map<rank_t,doub
   }
 
   /* fill in return value */
-  rank_t it = rank_t(0);
+  Server it = Server(0);
   lua_pushnil(L);
   while (lua_next(L, -2) != 0) {
     if (!lua_isnumber(L, -1)) {
@@ -154,9 +151,9 @@ int Mantle::where(Policy script, Metrics metrics, rank_t whoami, map<rank_t,doub
   return 0;
 }
 
-int Mantle::when(Policy p, Metrics m, rank_t whoami, bool &decision)
+int Mantle::when(bool &decision)
 {
-  int ret = execute(p, whoami, m);
+  int ret = execute(when_callback, whoami, metrics);
   if (ret != 0) {
     lua_close(L);
     return ret;
@@ -176,9 +173,9 @@ int Mantle::when(Policy p, Metrics m, rank_t whoami, bool &decision)
   return 0;
 }
 
-int Mantle::howmuch(Policy script, Metrics metrics, rank_t whoami, float &decision)
+int Mantle::howmuch(Load &decision)
 {
-  int ret = execute(script, whoami, metrics);
+  int ret = execute(howmuch_callback, whoami, metrics);
   if (ret != 0) {
     lua_close(L);
     return ret;
@@ -195,5 +192,12 @@ int Mantle::howmuch(Policy script, Metrics metrics, rank_t whoami, float &decisi
   decision = lua_tonumber(L, -1);
   lua_pop(L, 1);
   lua_close(L);
+  return 0;
+}
+
+
+int Mantle::update(ClusterMetrics m)
+{
+  metrics = m;
   return 0;
 }

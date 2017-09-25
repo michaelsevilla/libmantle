@@ -68,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -108,30 +108,39 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a42deab4c62ceb944c1c27b33fa7c50e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a42deab4c62ceb944c1c27b33fa7c50e2"></a>
-typedef int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Mantle_8h.html#a42deab4c62ceb944c1c27b33fa7c50e2">load_t</a></td></tr>
-<tr class="memdesc:a42deab4c62ceb944c1c27b33fa7c50e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">user-defined load metric, calculated using the load callback <br/></td></tr>
-<tr class="separator:a42deab4c62ceb944c1c27b33fa7c50e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f0113b6bd865fa46f92b8831226e837"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f0113b6bd865fa46f92b8831226e837"></a>
-typedef const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Mantle_8h.html#a3f0113b6bd865fa46f92b8831226e837">Policy</a></td></tr>
-<tr class="memdesc:a3f0113b6bd865fa46f92b8831226e837"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lua script containing the logic. <br/></td></tr>
-<tr class="separator:a3f0113b6bd865fa46f92b8831226e837"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1109cb7e62af8fabb11c73bd4b0d8122"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1109cb7e62af8fabb11c73bd4b0d8122"></a>
-typedef const vector&lt; map<br class="typebreak"/>
-&lt; string, double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Mantle_8h.html#a1109cb7e62af8fabb11c73bd4b0d8122">Metrics</a></td></tr>
-<tr class="memdesc:a1109cb7e62af8fabb11c73bd4b0d8122"><td class="mdescLeft">&#160;</td><td class="mdescRight">environment meeasurements used by the policies (and populated by the service) <br/></td></tr>
-<tr class="separator:a1109cb7e62af8fabb11c73bd4b0d8122"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e1e42aff15a8d26563d460edb757d60"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e1e42aff15a8d26563d460edb757d60"></a>
-typedef int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Mantle_8h.html#a7e1e42aff15a8d26563d460edb757d60">rank_t</a></td></tr>
-<tr class="memdesc:a7e1e42aff15a8d26563d460edb757d60"><td class="mdescLeft">&#160;</td><td class="mdescRight">server number (either MPI rank or MDS name) <br/></td></tr>
-<tr class="separator:a7e1e42aff15a8d26563d460edb757d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d0e8f81c0252dceeca5ef03ec14aefa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2d0e8f81c0252dceeca5ef03ec14aefa"></a>
+typedef double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Mantle_8h.html#a2d0e8f81c0252dceeca5ef03ec14aefa">Load</a></td></tr>
+<tr class="memdesc:a2d0e8f81c0252dceeca5ef03ec14aefa"><td class="mdescLeft">&#160;</td><td class="mdescRight">load metric, calculated using the load callback <br/></td></tr>
+<tr class="separator:a2d0e8f81c0252dceeca5ef03ec14aefa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd91f5243b741797c5636479cfc47390"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd91f5243b741797c5636479cfc47390"></a>
+typedef string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a></td></tr>
+<tr class="memdesc:abd91f5243b741797c5636479cfc47390"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lua script containing the logic. <br/></td></tr>
+<tr class="separator:abd91f5243b741797c5636479cfc47390"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad95a0dc6474d6f9c2aa39ecf5d390ba9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad95a0dc6474d6f9c2aa39ecf5d390ba9"></a>
+typedef int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Mantle_8h.html#ad95a0dc6474d6f9c2aa39ecf5d390ba9">Server</a></td></tr>
+<tr class="memdesc:ad95a0dc6474d6f9c2aa39ecf5d390ba9"><td class="mdescLeft">&#160;</td><td class="mdescRight">server name (e.g., MPI rank, MDS name) <br/></td></tr>
+<tr class="separator:ad95a0dc6474d6f9c2aa39ecf5d390ba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10ba2dd3db9e069d442fac4413b72d61"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a10ba2dd3db9e069d442fac4413b72d61"></a>
+typedef map&lt; std::string, <a class="el" href="Mantle_8h.html#a2d0e8f81c0252dceeca5ef03ec14aefa">Load</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Mantle_8h.html#a10ba2dd3db9e069d442fac4413b72d61">ServerMetrics</a></td></tr>
+<tr class="memdesc:a10ba2dd3db9e069d442fac4413b72d61"><td class="mdescLeft">&#160;</td><td class="mdescRight">measurements used by policies (and populated by the service) <br/></td></tr>
+<tr class="separator:a10ba2dd3db9e069d442fac4413b72d61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98940411deca4cf358080920c3381d01"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98940411deca4cf358080920c3381d01"></a>
+typedef vector&lt; <a class="el" href="Mantle_8h.html#a10ba2dd3db9e069d442fac4413b72d61">ServerMetrics</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Mantle_8h.html#a98940411deca4cf358080920c3381d01">ClusterMetrics</a></td></tr>
+<tr class="memdesc:a98940411deca4cf358080920c3381d01"><td class="mdescLeft">&#160;</td><td class="mdescRight">measurements of every server in the cluster <br/></td></tr>
+<tr class="separator:a98940411deca4cf358080920c3381d01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac16bf254740869adb6a2184d90ac4ff8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac16bf254740869adb6a2184d90ac4ff8"></a>
+typedef map&lt; <a class="el" href="Mantle_8h.html#ad95a0dc6474d6f9c2aa39ecf5d390ba9">Server</a>, <a class="el" href="Mantle_8h.html#a2d0e8f81c0252dceeca5ef03ec14aefa">Load</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Mantle_8h.html#ac16bf254740869adb6a2184d90ac4ff8">Targets</a></td></tr>
+<tr class="memdesc:ac16bf254740869adb6a2184d90ac4ff8"><td class="mdescLeft">&#160;</td><td class="mdescRight">describes which target server to send load to (see where callback) <br/></td></tr>
+<tr class="separator:ac16bf254740869adb6a2184d90ac4ff8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>API for the load balancing microservice. </p>
+<p>Copyright (C) 2016 Michael Sevilla <a href="#" onclick="location.href='mai'+'lto:'+'mik'+'es'+'evi'+'ll'+'a3@'+'gm'+'ail'+'.c'+'om'; return false;">mikes<span style="display: none;">.nosp@m.</span>evil<span style="display: none;">.nosp@m.</span>la3@g<span style="display: none;">.nosp@m.</span>mail<span style="display: none;">.nosp@m.</span>.com</a></p>
+<p>This is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 2.1, as published by the Free Software Foundation. See file COPYING. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 22 2017 22:14:57 for libmantle by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 25 2017 19:16:52 for libmantle by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

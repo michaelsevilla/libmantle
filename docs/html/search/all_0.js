@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['close',['close',['../structcmd_8h.html#ae152484c890a24e4d9b4980e7b965be0',1,'structcmd.h']]]
+  ['clustermetrics',['ClusterMetrics',['../Mantle_8h.html#a98940411deca4cf358080920c3381d01',1,'Mantle.h']]],
+  ['configure',['configure',['../classMantle.html#a0fac62ac6db792cf86d7704f1321b2dd',1,'Mantle']]]
 ];

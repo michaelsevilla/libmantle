@@ -69,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -89,65 +89,103 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Mantle Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p><code>#include &lt;<a class="el" href="Mantle_8h_source.html">Mantle.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac3084c7aeee68c4df6d72129ccaeb8c5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMantle.html#ac3084c7aeee68c4df6d72129ccaeb8c5">start</a> ()</td></tr>
-<tr class="separator:ac3084c7aeee68c4df6d72129ccaeb8c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2416696ae9ccbb83b063e77ad7b4242f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMantle.html#a2416696ae9ccbb83b063e77ad7b4242f">when</a> (<a class="el" href="Mantle_8h.html#a3f0113b6bd865fa46f92b8831226e837">Policy</a> p, <a class="el" href="Mantle_8h.html#a1109cb7e62af8fabb11c73bd4b0d8122">Metrics</a> m, <a class="el" href="Mantle_8h.html#a7e1e42aff15a8d26563d460edb757d60">rank_t</a> r, bool &amp;decision)</td></tr>
-<tr class="separator:a2416696ae9ccbb83b063e77ad7b4242f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aacf102e3ef44ce697b8aee776e2977c3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMantle.html#aacf102e3ef44ce697b8aee776e2977c3">howmuch</a> (<a class="el" href="Mantle_8h.html#a3f0113b6bd865fa46f92b8831226e837">Policy</a> p, <a class="el" href="Mantle_8h.html#a1109cb7e62af8fabb11c73bd4b0d8122">Metrics</a> m, <a class="el" href="Mantle_8h.html#a7e1e42aff15a8d26563d460edb757d60">rank_t</a> r, float &amp;decision)</td></tr>
-<tr class="separator:aacf102e3ef44ce697b8aee776e2977c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92dde2ab5a24da5e24421b930fc0b3d7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMantle.html#a92dde2ab5a24da5e24421b930fc0b3d7">where</a> (<a class="el" href="Mantle_8h.html#a3f0113b6bd865fa46f92b8831226e837">Policy</a> p, <a class="el" href="Mantle_8h.html#a1109cb7e62af8fabb11c73bd4b0d8122">Metrics</a> m, <a class="el" href="Mantle_8h.html#a7e1e42aff15a8d26563d460edb757d60">rank_t</a> r, map&lt; <a class="el" href="Mantle_8h.html#a7e1e42aff15a8d26563d460edb757d60">rank_t</a>, double &gt; &amp;decision)</td></tr>
-<tr class="separator:a92dde2ab5a24da5e24421b930fc0b3d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10cc8f60865930d6cf56ff9f2731779a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMantle.html#a10cc8f60865930d6cf56ff9f2731779a">Mantle</a> (<a class="el" href="Mantle_8h.html#ad95a0dc6474d6f9c2aa39ecf5d390ba9">Server</a> s)</td></tr>
+<tr class="separator:a10cc8f60865930d6cf56ff9f2731779a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05a40ac579a3786139e2bb2105a1f4d2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMantle.html#a05a40ac579a3786139e2bb2105a1f4d2">when</a> (bool &amp;decision)</td></tr>
+<tr class="separator:a05a40ac579a3786139e2bb2105a1f4d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96c14da48bdab78a1e5b20366262feb7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMantle.html#a96c14da48bdab78a1e5b20366262feb7">where</a> (<a class="el" href="Mantle_8h.html#ac16bf254740869adb6a2184d90ac4ff8">Targets</a> &amp;decision)</td></tr>
+<tr class="separator:a96c14da48bdab78a1e5b20366262feb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e4445a72ced540932ab249a10244d64"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMantle.html#a4e4445a72ced540932ab249a10244d64">howmuch</a> (<a class="el" href="Mantle_8h.html#a2d0e8f81c0252dceeca5ef03ec14aefa">Load</a> &amp;decision)</td></tr>
+<tr class="separator:a4e4445a72ced540932ab249a10244d64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fac62ac6db792cf86d7704f1321b2dd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMantle.html#a0fac62ac6db792cf86d7704f1321b2dd">configure</a> (<a class="el" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a> <a class="el" href="classMantle.html#a05a40ac579a3786139e2bb2105a1f4d2">when</a>, <a class="el" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a> <a class="el" href="classMantle.html#a96c14da48bdab78a1e5b20366262feb7">where</a>, <a class="el" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a> <a class="el" href="classMantle.html#a4e4445a72ced540932ab249a10244d64">howmuch</a>)</td></tr>
+<tr class="separator:a0fac62ac6db792cf86d7704f1321b2dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab69fb99e1a27deb1e0823e27598ae58"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMantle.html#aab69fb99e1a27deb1e0823e27598ae58">update</a> (<a class="el" href="Mantle_8h.html#a98940411deca4cf358080920c3381d01">ClusterMetrics</a> metrics)</td></tr>
+<tr class="separator:aab69fb99e1a27deb1e0823e27598ae58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:ae0322fa772975323a3b2cc397991cae3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0322fa772975323a3b2cc397991cae3"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>execute</b> (<a class="el" href="Mantle_8h.html#a3f0113b6bd865fa46f92b8831226e837">Policy</a> p, <a class="el" href="Mantle_8h.html#a7e1e42aff15a8d26563d460edb757d60">rank_t</a> r, <a class="el" href="Mantle_8h.html#a1109cb7e62af8fabb11c73bd4b0d8122">Metrics</a> &amp;m)</td></tr>
-<tr class="separator:ae0322fa772975323a3b2cc397991cae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7d73d2ea11491bb42528dc5c97f2204"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7d73d2ea11491bb42528dc5c97f2204"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>execute</b> (<a class="el" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a> p, <a class="el" href="Mantle_8h.html#ad95a0dc6474d6f9c2aa39ecf5d390ba9">Server</a> s, <a class="el" href="Mantle_8h.html#a98940411deca4cf358080920c3381d01">ClusterMetrics</a> m)</td></tr>
+<tr class="separator:ac7d73d2ea11491bb42528dc5c97f2204"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a501bee3bdc4b55c7649ec725ee266834"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a501bee3bdc4b55c7649ec725ee266834"></a>
 lua_State *&#160;</td><td class="memItemRight" valign="bottom"><b>L</b></td></tr>
 <tr class="separator:a501bee3bdc4b55c7649ec725ee266834"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c31fb2f65e1ec89b4f5f812fd899df8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7c31fb2f65e1ec89b4f5f812fd899df8"></a>
-map&lt; <a class="el" href="Mantle_8h.html#a7e1e42aff15a8d26563d460edb757d60">rank_t</a>, <a class="el" href="Mantle_8h.html#a42deab4c62ceb944c1c27b33fa7c50e2">load_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>server_load</b></td></tr>
-<tr class="separator:a7c31fb2f65e1ec89b4f5f812fd899df8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18bca1b1b8cfcb7c2ec781a9dc4ccab7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a18bca1b1b8cfcb7c2ec781a9dc4ccab7"></a>
+<a class="el" href="Mantle_8h.html#ad95a0dc6474d6f9c2aa39ecf5d390ba9">Server</a>&#160;</td><td class="memItemRight" valign="bottom"><b>whoami</b></td></tr>
+<tr class="separator:a18bca1b1b8cfcb7c2ec781a9dc4ccab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f91a83063cb0a155364bba9bf605821"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9f91a83063cb0a155364bba9bf605821"></a>
+<a class="el" href="Mantle_8h.html#a98940411deca4cf358080920c3381d01">ClusterMetrics</a>&#160;</td><td class="memItemRight" valign="bottom"><b>metrics</b></td></tr>
+<tr class="separator:a9f91a83063cb0a155364bba9bf605821"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a2a2892a31094982e8f937fd38cd60b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a2a2892a31094982e8f937fd38cd60b"></a>
+<a class="el" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a>&#160;</td><td class="memItemRight" valign="bottom"><b>when_callback</b></td></tr>
+<tr class="separator:a6a2a2892a31094982e8f937fd38cd60b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad90fb1c885ef3844befe86a982d5e8c8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad90fb1c885ef3844befe86a982d5e8c8"></a>
+<a class="el" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a>&#160;</td><td class="memItemRight" valign="bottom"><b>howmuch_callback</b></td></tr>
+<tr class="separator:ad90fb1c885ef3844befe86a982d5e8c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1406a048935d33f617bb6469e114635"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af1406a048935d33f617bb6469e114635"></a>
+<a class="el" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a>&#160;</td><td class="memItemRight" valign="bottom"><b>where_callback</b></td></tr>
+<tr class="separator:af1406a048935d33f617bb6469e114635"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The central class for the <a class="el" href="classMantle.html">Mantle</a> Load Balancing API </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="aacf102e3ef44ce697b8aee776e2977c3"></a>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a10cc8f60865930d6cf56ff9f2731779a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Mantle::Mantle </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="Mantle_8h.html#ad95a0dc6474d6f9c2aa39ecf5d390ba9">Server</a>&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Initializes a <a class="el" href="classMantle.html">Mantle</a> instance</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>name of current server (the one running <a class="el" href="classMantle.html">Mantle</a>) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a0fac62ac6db792cf86d7704f1321b2dd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int Mantle::howmuch </td>
+          <td class="memname">int Mantle::configure </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="Mantle_8h.html#a3f0113b6bd865fa46f92b8831226e837">Policy</a>&#160;</td>
-          <td class="paramname"><em>p</em>, </td>
+          <td class="paramtype"><a class="el" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a>&#160;</td>
+          <td class="paramname"><em>when</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="Mantle_8h.html#a1109cb7e62af8fabb11c73bd4b0d8122">Metrics</a>&#160;</td>
-          <td class="paramname"><em>m</em>, </td>
+          <td class="paramtype"><a class="el" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a>&#160;</td>
+          <td class="paramname"><em>where</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="Mantle_8h.html#a7e1e42aff15a8d26563d460edb757d60">rank_t</a>&#160;</td>
-          <td class="paramname"><em>r</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float &amp;&#160;</td>
-          <td class="paramname"><em>decision</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a>&#160;</td>
+          <td class="paramname"><em>howmuch</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -156,7 +194,33 @@ map&lt; <a class="el" href="Mantle_8h.html#a7e1e42aff15a8d26563d460edb757d60">ra
         </tr>
       </table>
 </div><div class="memdoc">
-<p>How much load the service should move</p>
+<p>Configure load balancing policies</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">when</td><td>callback that decides when to move load </td></tr>
+    <tr><td class="paramname">where</td><td>callback that decides which servers to send load to </td></tr>
+    <tr><td class="paramname">howmuch</td><td>callback that decides what fraction of load to shed </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, &lt; 0 otherwise </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a4e4445a72ced540932ab249a10244d64"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Mantle::howmuch </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="Mantle_8h.html#a2d0e8f81c0252dceeca5ef03ec14aefa">Load</a> &amp;&#160;</td>
+          <td class="paramname"><em>decision</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Executes the howmuch callback, which decides how much load the service should move</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">decision</td><td>amount of load the service should move </td></tr>
@@ -167,59 +231,44 @@ map&lt; <a class="el" href="Mantle_8h.html#a7e1e42aff15a8d26563d460edb757d60">ra
 
 </div>
 </div>
-<a class="anchor" id="ac3084c7aeee68c4df6d72129ccaeb8c5"></a>
+<a class="anchor" id="aab69fb99e1a27deb1e0823e27598ae58"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int Mantle::start </td>
+          <td class="memname">int Mantle::update </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="Mantle_8h.html#a98940411deca4cf358080920c3381d01">ClusterMetrics</a>&#160;</td>
+          <td class="paramname"><em>metrics</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initializes <a class="el" href="classMantle.html">Mantle</a>, including instantiating the Lua VM </p>
+<p>Update the metrics maintained by <a class="el" href="classMantle.html">Mantle</a> (should be done every polling interval)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metrics</td><td>values to update metrics data structure with </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on success, &lt; 0 otherwise </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a2416696ae9ccbb83b063e77ad7b4242f"></a>
+<a class="anchor" id="a05a40ac579a3786139e2bb2105a1f4d2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int Mantle::when </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="Mantle_8h.html#a3f0113b6bd865fa46f92b8831226e837">Policy</a>&#160;</td>
-          <td class="paramname"><em>p</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="Mantle_8h.html#a1109cb7e62af8fabb11c73bd4b0d8122">Metrics</a>&#160;</td>
-          <td class="paramname"><em>m</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="Mantle_8h.html#a7e1e42aff15a8d26563d460edb757d60">rank_t</a>&#160;</td>
-          <td class="paramname"><em>r</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">bool &amp;&#160;</td>
-          <td class="paramname"><em>decision</em>&#160;</td>
-        </tr>
-        <tr>
+          <td class="paramname"><em>decision</em></td><td>)</td>
           <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Whether the service should move load or not </p>
+<p>Executes the when callback, which decides whether the service should move load or not</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">decision</td><td>true if the policy wants the service to migrate load, false otherwise </td></tr>
@@ -230,42 +279,20 @@ map&lt; <a class="el" href="Mantle_8h.html#a7e1e42aff15a8d26563d460edb757d60">ra
 
 </div>
 </div>
-<a class="anchor" id="a92dde2ab5a24da5e24421b930fc0b3d7"></a>
+<a class="anchor" id="a96c14da48bdab78a1e5b20366262feb7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int Mantle::where </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="Mantle_8h.html#a3f0113b6bd865fa46f92b8831226e837">Policy</a>&#160;</td>
-          <td class="paramname"><em>p</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="Mantle_8h.html#ac16bf254740869adb6a2184d90ac4ff8">Targets</a> &amp;&#160;</td>
+          <td class="paramname"><em>decision</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="Mantle_8h.html#a1109cb7e62af8fabb11c73bd4b0d8122">Metrics</a>&#160;</td>
-          <td class="paramname"><em>m</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="Mantle_8h.html#a7e1e42aff15a8d26563d460edb757d60">rank_t</a>&#160;</td>
-          <td class="paramname"><em>r</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">map&lt; <a class="el" href="Mantle_8h.html#a7e1e42aff15a8d26563d460edb757d60">rank_t</a>, double &gt; &amp;&#160;</td>
-          <td class="paramname"><em>decision</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Where the service should move load (which servers)</p>
+<p>Executes the where callback, which decides where the service should move load (which servers)</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">decision</td><td>dictionary (rank -&gt; load) that describes which rank to send load to </td></tr>
@@ -282,7 +309,7 @@ map&lt; <a class="el" href="Mantle_8h.html#a7e1e42aff15a8d26563d460edb757d60">ra
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 22 2017 22:14:57 for libmantle by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 25 2017 19:16:52 for libmantle by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
