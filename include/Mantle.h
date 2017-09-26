@@ -65,7 +65,7 @@ class Mantle {
     lua_State *L;
     Server whoami;
     ClusterMetrics metrics;
-    Policy when_callback, howmuch_callback, where_callback;
+    Policy load_callback, when_callback, howmuch_callback, where_callback;
     int execute(Policy p, Server s, ClusterMetrics m);
 
   public:
@@ -74,7 +74,8 @@ class Mantle {
      *
      * @param s name of current server (the one running Mantle)
      */
-    Mantle(Server s) : L(NULL) {
+    Mantle(Server s) : L(NULL)
+    {
       whoami = s;
     };
    
@@ -108,20 +109,28 @@ class Mantle {
     /**
      * Configure load balancing policies
      *
+     * @param  load callback that lets users scalarize metrics, run before all
+     * other callbacks
      * @param  when callback that decides when to move load
      * @param  where callback that decides which servers to send load to
      * @param  howmuch callback that decides what fraction of load to shed
      * @return 0 on success, < 0 otherwise
      **/
-    int configure(Policy when, Policy where, Policy howmuch);
+    int configure(Policy load, Policy when, Policy where, Policy howmuch);
  
     /**
-     * Update the metrics maintained by Mantle (should be done every polling interval)
+     * Populates metrics with updated values
      *
      * @param metrics values to update metrics data structure with
      * @return 0 on success, < 0 otherwise
      */
     int update(ClusterMetrics metrics);
-};
 
+    /**
+     * Executes the debug callback, which helps users inspect the environment
+     *
+     * @param p executable script that inspects environment
+     */
+    void debugenv(Policy p);
+};
 #endif

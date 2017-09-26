@@ -44,16 +44,17 @@ int dout_wrapper(lua_State *L)
   return 0;
 }
 
-int Mantle::configure(Policy when, Policy where, Policy howmuch)
+int Mantle::configure(Policy load, Policy when, Policy where, Policy howmuch)
 {
   whoami = whoami;
+  load_callback = load;
   when_callback = when;
   where_callback = where;
   howmuch_callback = howmuch; 
   return 0;
 }
 
-int Mantle::execute(Policy script, Server whoami, ClusterMetrics metrics)
+int Mantle::execute(Policy policy, Server whoami, ClusterMetrics metrics)
 {
   /* build lua vm state */
   L = luaL_newstate();
@@ -99,6 +100,9 @@ int Mantle::execute(Policy script, Server whoami, ClusterMetrics metrics)
 
   /* set the name of the global server table */
   lua_setglobal(L, "server");
+
+  /* append policy to load callback, so we calculate load before execution */
+  Policy script = load_callback + "\n" + policy;
 
   /* load the balancer */
   if (luaL_loadstring(L, script.c_str())) {
@@ -200,4 +204,9 @@ int Mantle::update(ClusterMetrics m)
 {
   metrics = m;
   return 0;
+}
+
+void Mantle::debugenv(Policy p)
+{
+  std::cout<<execute(p, whoami, metrics)<<std::endl;
 }

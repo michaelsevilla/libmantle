@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['mantle',['Mantle',['../index.html',1,'']]],
-  ['mantle',['Mantle',['../classMantle.html',1,'Mantle'],['../classMantle.html#a10cc8f60865930d6cf56ff9f2731779a',1,'Mantle::Mantle()']]],
-  ['mantle_2eh',['Mantle.h',['../Mantle_8h.html',1,'']]]
+  ['load',['Load',['../Mantle_8h.html#a2d0e8f81c0252dceeca5ef03ec14aefa',1,'Mantle.h']]]
 ];

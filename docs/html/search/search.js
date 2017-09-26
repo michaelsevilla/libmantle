@@ -7,10 +7,10 @@
 
 var indexSectionsWithContent =
 {
-  0: "chlmpstuw",
+  0: "cdhlmpstuw",
   1: "m",
   2: "m",
-  3: "chmuw",
+  3: "cdhmuw",
   4: "clpst",
   5: "m"
 };

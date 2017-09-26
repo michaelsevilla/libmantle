@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['update',['update',['../classMantle.html#aab69fb99e1a27deb1e0823e27598ae58',1,'Mantle']]]
+  ['targets',['Targets',['../Mantle_8h.html#ac16bf254740869adb6a2184d90ac4ff8',1,'Mantle.h']]]
 ];

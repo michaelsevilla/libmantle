@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['howmuch',['howmuch',['../classMantle.html#a4e4445a72ced540932ab249a10244d64',1,'Mantle']]]
+  ['debugenv',['debugenv',['../classMantle.html#a3ccf8f8ba8fd029811cf870f9b6f3a18',1,'Mantle']]]
 ];

@@ -1,8 +1,17 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <Mantle.h>
 #include <mpi.h>
 #include <string>
 #include <unistd.h>
+
+std::string read_policy(std::string fname) {
+  std::ifstream f(fname);
+  std::stringstream buffer;
+  buffer << f.rdbuf();
+  return buffer.str();
+}
 
 int main() {
 
@@ -16,18 +25,26 @@ int main() {
     exit(EXIT_FAILURE);
   }
 
+  if(world_rank > 0) {
+    MPI_Finalize();
+    exit(EXIT_SUCCESS);
+  }
+
   /* Mantle garbage */
-  string testlog = "BAL_LOG(0, \"received \", server[1][\"metric2\"])\n";
-  Policy when    = testlog + "return true";
-  Policy where   = testlog + "return {1.111, 2.222, 3.333}";
-  Policy howmuch = testlog + "return 3.145";
+  std::string d   = "../src/policies/";
+  Policy load     = read_policy(d+"load.lua");
+  Policy when     = read_policy(d+"when.lua");
+  Policy where    = read_policy(d+"where.lua");
+  Policy howmuch  = read_policy(d+"howmuch.lua");
+  Policy debugenv = read_policy(d+"debugenv.lua");
   Mantle mantle(world_rank);
-  mantle.configure(when, where, howmuch);
+  mantle.configure(load, when, where, howmuch);
 
   ClusterMetrics metrics (world_size);
   for(int i = 0; i < world_size; i++)
     metrics[i] = {{"metric0", 0.00}, {"metric1", 1.11}, {"metric2", 2.22}};
   mantle.update(metrics);
+  mantle.debugenv(debugenv);
 
   /* Call each Mantle function with empty metrics */
   bool when_decision;

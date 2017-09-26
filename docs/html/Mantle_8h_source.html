@@ -119,26 +119,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    lua_State *L;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <a class="code" href="Mantle_8h.html#ad95a0dc6474d6f9c2aa39ecf5d390ba9">Server</a> whoami;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <a class="code" href="Mantle_8h.html#a98940411deca4cf358080920c3381d01">ClusterMetrics</a> metrics;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <a class="code" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a> when_callback, howmuch_callback, where_callback;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <a class="code" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a> load_callback, when_callback, howmuch_callback, where_callback;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">int</span> execute(<a class="code" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a> p, <a class="code" href="Mantle_8h.html#ad95a0dc6474d6f9c2aa39ecf5d390ba9">Server</a> s, <a class="code" href="Mantle_8h.html#a98940411deca4cf358080920c3381d01">ClusterMetrics</a> m);</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="classMantle.html#a10cc8f60865930d6cf56ff9f2731779a">   77</a></span>&#160;    <a class="code" href="classMantle.html#a10cc8f60865930d6cf56ff9f2731779a">Mantle</a>(<a class="code" href="Mantle_8h.html#ad95a0dc6474d6f9c2aa39ecf5d390ba9">Server</a> s) : L(NULL) {</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      whoami = s;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    };</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;   </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordtype">int</span> when(<span class="keywordtype">bool</span> &amp;decision);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordtype">int</span> where(<a class="code" href="Mantle_8h.html#ac16bf254740869adb6a2184d90ac4ff8">Targets</a> &amp;decision);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordtype">int</span> howmuch(<a class="code" href="Mantle_8h.html#a2d0e8f81c0252dceeca5ef03ec14aefa">Load</a> &amp;decision);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordtype">int</span> configure(<a class="code" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a> when, <a class="code" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a> where, <a class="code" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a> howmuch);</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keywordtype">int</span> update(<a class="code" href="Mantle_8h.html#a98940411deca4cf358080920c3381d01">ClusterMetrics</a> metrics);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;};</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="classMantle.html#a10cc8f60865930d6cf56ff9f2731779a">   77</a></span>&#160;    <a class="code" href="classMantle.html#a10cc8f60865930d6cf56ff9f2731779a">Mantle</a>(<a class="code" href="Mantle_8h.html#ad95a0dc6474d6f9c2aa39ecf5d390ba9">Server</a> s) : L(NULL)</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    {</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;      whoami = s;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    };</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;   </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordtype">int</span> when(<span class="keywordtype">bool</span> &amp;decision);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordtype">int</span> where(<a class="code" href="Mantle_8h.html#ac16bf254740869adb6a2184d90ac4ff8">Targets</a> &amp;decision);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordtype">int</span> howmuch(<a class="code" href="Mantle_8h.html#a2d0e8f81c0252dceeca5ef03ec14aefa">Load</a> &amp;decision);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keywordtype">int</span> configure(<a class="code" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a> load, <a class="code" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a> when, <a class="code" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a> where, <a class="code" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a> howmuch);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordtype">int</span> update(<a class="code" href="Mantle_8h.html#a98940411deca4cf358080920c3381d01">ClusterMetrics</a> metrics);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keywordtype">void</span> debugenv(<a class="code" href="Mantle_8h.html#abd91f5243b741797c5636479cfc47390">Policy</a> p);</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;};</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="Mantle_8h_html_ad95a0dc6474d6f9c2aa39ecf5d390ba9"><div class="ttname"><a href="Mantle_8h.html#ad95a0dc6474d6f9c2aa39ecf5d390ba9">Server</a></div><div class="ttdeci">int32_t Server</div><div class="ttdoc">server name (e.g., MPI rank, MDS name) </div><div class="ttdef"><b>Definition:</b> Mantle.h:45</div></div>
 <div class="ttc" id="Mantle_8h_html_ac16bf254740869adb6a2184d90ac4ff8"><div class="ttname"><a href="Mantle_8h.html#ac16bf254740869adb6a2184d90ac4ff8">Targets</a></div><div class="ttdeci">map&lt; Server, Load &gt; Targets</div><div class="ttdoc">describes which target server to send load to (see where callback) </div><div class="ttdef"><b>Definition:</b> Mantle.h:60</div></div>
 <div class="ttc" id="classMantle_html_a10cc8f60865930d6cf56ff9f2731779a"><div class="ttname"><a href="classMantle.html#a10cc8f60865930d6cf56ff9f2731779a">Mantle::Mantle</a></div><div class="ttdeci">Mantle(Server s)</div><div class="ttdef"><b>Definition:</b> Mantle.h:77</div></div>
@@ -150,7 +152,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 25 2017 19:16:52 for libmantle by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 26 2017 22:18:05 for libmantle by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
