@@ -25,6 +25,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <lauxlib.h>
 
 // TODO: get rid of this
 using namespace std;
@@ -45,7 +46,7 @@ typedef string Policy;
 typedef int32_t Server;
 
 /**
- * \brief measurements used by policies (and populated by the service)
+ * \brief measurements of resource utilizations used by policies (and populated by the service)
  */
 typedef map<std::string, Load> ServerMetrics;
 
@@ -53,6 +54,16 @@ typedef map<std::string, Load> ServerMetrics;
  * \brief measurements of every server in the cluster
  */
 typedef vector<ServerMetrics> ClusterMetrics;
+
+/**
+ * \brief access to a data structure used by policies (and populated by the service)
+ */
+typedef pair<int,int> Timestamp;
+
+/**
+ * \brief list of accesses to a data structure
+ */
+typedef Timestamp* TimeSeriesMetrics;
 
 /** 
  * \brief describes which target server to send load to (see where callback)
@@ -119,12 +130,20 @@ class Mantle {
     int configure(Policy load, Policy when, Policy where, Policy howmuch);
  
     /**
-     * Populates metrics with updated values
+     * Populates cluster metrics with updated values
      *
      * @param metrics values to update metrics data structure with
      * @return 0 on success, < 0 otherwise
      */
     int update(ClusterMetrics metrics);
+
+    /**
+     * Populates time series metrics with updated values
+     *
+     * @param array of (timestamp, ID) accesses to expose to policy engine
+     * @return 0 on success, < 0 otherwise
+     */
+    int update(TimeSeriesMetrics array, size_t size);
 
     /**
      * Executes the debug callback, which helps users inspect the environment

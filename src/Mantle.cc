@@ -15,12 +15,16 @@
 #include "Mantle.h"
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <cerrno>
 
 #define dout(level) (std::cout << "[src/Mantle.cc (" << __LINE__ << ")]\t" << level << ": " )
 #define dendl (std::endl)
 
-int dout_wrapper(lua_State *L)
+/*
+ * Functions called from Lua
+ */
+static int dout_wrapper(lua_State *L)
 {
   #undef dout_prefix
   #define dout_prefix *_dout << "lua.balancer "
@@ -44,6 +48,65 @@ int dout_wrapper(lua_State *L)
   return 0;
 }
 
+static int write_state(lua_State *L)
+{
+   /* Lua indexes the stack from the bottom up */
+  int bottom = -1 * lua_gettop(L);
+  if (!lua_isinteger(L, bottom) || bottom == 0) {
+    dout(0) << "WARNING: WRstate called without a state" << dendl;
+    return -EINVAL;
+  }
+
+  /* bottom of the stack is the log level */
+  int state = lua_tointeger(L, bottom);
+
+  /* write state to file, overwriting anything that's there */
+  ofstream f("/tmp/state");
+  f << state;
+  f.close();
+  return 0;
+}
+
+static int read_state(lua_State *L)
+{
+  /* read state to file */
+  ifstream f("/tmp/state");
+  stringstream buffer;
+  buffer << f.rdbuf();
+  f.close();
+
+  lua_pushnumber(L, stoi(buffer.str()));
+  return 1;
+}
+
+
+TimeSeriesMetrics timeseries;
+static int timeseries_new(lua_State* L) {
+  TimeSeriesMetrics* p = (TimeSeriesMetrics *)lua_newuserdata(L, sizeof(TimeSeriesMetrics *));
+  *p = timeseries;
+  luaL_getmetatable(L, "timeseries");
+  lua_setmetatable(L, -2);
+  return 1;
+}
+
+size_t size;
+static int timeseries_size(lua_State* L) {
+  lua_pushnumber(L, size);
+  return 1;
+}
+
+static int timeseries_get(lua_State* L) {
+  TimeSeriesMetrics* p = (TimeSeriesMetrics *)luaL_checkudata(L, 1, "timeseries");
+  int index = luaL_checkinteger(L, 2);
+  Timestamp ts = (Timestamp)(*p)[index-1];
+  lua_pushinteger(L, ts.first);
+  lua_pushinteger(L, ts.second);
+  return 2;
+}
+
+/*
+ * Mantle functions
+ */
 int Mantle::configure(Policy load, Policy when, Policy where, Policy howmuch)
 {
   whoami = whoami;
@@ -68,6 +131,8 @@ int Mantle::execute(Policy policy, Server whoami, ClusterMetrics metrics)
 
   /* setup debugging */
   lua_register(L, "BAL_LOG", dout_wrapper);
+  lua_register(L, "WRstate", write_state);
+  lua_register(L, "RDstate", read_state);
 
   if (L == NULL) {
     dout(0) << "ERROR: mantle or lua was not started" << dendl;
@@ -100,6 +165,22 @@ int Mantle::execute(Policy policy, Server whoami, ClusterMetrics metrics)
 
   /* set the name of the global server table */
   lua_setglobal(L, "server");
+
+  /* functions we can call on a timeseries object in Lua*/
+  static const struct luaL_Reg timeseries[] = {
+     { "get", timeseries_get },
+     { "size", timeseries_size },
+     {NULL, NULL}
+  };
+
+  /* expose timeseries from C++ to Lua as a metatable*/
+  lua_register(L, "timeseries", timeseries_new);
+  luaL_newmetatable(L, "timeseries");
+
+  /* redirect __index to metatable, which sits at the top of the stack */
+  lua_pushvalue(L, -1);
+  lua_setfield(L, -2, "__index");
+  luaL_setfuncs(L, timeseries, 0);
 
   /* append policy to load callback, so we calculate load before execution */
   Policy script = load_callback + "\n" + policy;
@@ -206,7 +287,13 @@ int Mantle::update(ClusterMetrics m)
   return 0;
 }
 
+int Mantle::update(TimeSeriesMetrics ts, size_t s) {
+  timeseries = ts;
+  size = s;
+  return 0;
+}
+
 void Mantle::debugenv(Policy p)
 {
-  std::cout<<execute(p, whoami, metrics)<<std::endl;
+  execute(p, whoami, metrics);
 }

@@ -40,10 +40,19 @@ int main() {
   Mantle mantle(world_rank);
   mantle.configure(load, when, where, howmuch);
 
+  /* Mantle Environment: expose metrics to policies */
   ClusterMetrics metrics (world_size);
   for(int i = 0; i < world_size; i++)
     metrics[i] = {{"metric0", 0.00}, {"metric1", 1.11}, {"metric2", 2.22}};
   mantle.update(metrics);
+
+  /* Mantle Environment: expose timeseries from service */
+  Timestamp timeseries[] = {
+    std::make_pair(1, 11),
+    std::make_pair(2, 22),
+    std::make_pair(3, 33)
+  };
+  mantle.update(timeseries, sizeof(timeseries)/sizeof(timeseries[0]));
   mantle.debugenv(debugenv);
 
   /* Call each Mantle function with empty metrics */
@@ -58,11 +67,11 @@ int main() {
 
   usleep(1000000);   
   if (world_rank == 0) {
-    std::cout<<"where:(";
+    std::cout<<"where:( ";
     for(Targets::iterator it = where_decision.begin();
         it != where_decision.end();
         it++)
-      std::cout<<"mds"<<it->first<<"="<<it->second<<" ";
+      std::cout<<"server"<<it->first<<"="<<it->second<<" ";
     std::cout<<")"<<std::endl;
     std::cout<<"when:"<<when_decision<<std::endl;
     std::cout<<"howmuch:"<<howmuch_decision<<std::endl;
